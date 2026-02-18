@@ -1,0 +1,35 @@
+# =========================
+# Python
+# =========================
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Flask
+instance/
+.env
+
+# =========================
+# ML / Dataset (IMPORTANT)
+# =========================
+*.h5
+*.pkl
+*.arff
+data/
+models/
+
+# =========================
+# React / Node
+# =========================
+node_modules/
+frontend/node_modules/
+build/
+dist/
+
+# =========================
+# OS
+# =========================
+.DS_Store
+Thumbs.db

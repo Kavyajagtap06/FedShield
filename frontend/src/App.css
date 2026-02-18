@@ -1,0 +1,56 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(to right, #1f4037, #99f2c8);
+}
+
+.container {
+  text-align: center;
+  padding: 50px;
+}
+
+h1 {
+  color: white;
+  margin-bottom: 30px;
+}
+
+textarea {
+  width: 60%;
+  padding: 10px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+}
+
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #222;
+  color: white;
+}
+
+button:hover {
+  background-color: #444;
+}
+
+.result {
+  margin-top: 30px;
+  padding: 20px;
+  border-radius: 10px;
+  width: 40%;
+  margin-left: auto;
+  margin-right: auto;
+  color: white;
+}
+
+.result.Phishing {
+  background-color: #e74c3c;
+}
+
+.result.Legitimate {
+  background-color: #2ecc71;
+}
