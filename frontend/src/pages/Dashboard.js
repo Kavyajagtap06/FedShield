@@ -24,13 +24,20 @@ function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [features, setFeatures] = useState([]);
   const [domainInfo, setDomainInfo] = useState(null);
+  const [ipInfo, setIpInfo] = useState({});
 
   // 👇 ADD IT HERE (after state, before return)
   const formatAge = (days) => {
-    if (!days || days === 0) return "Unknown";
-    if (days < 30) return `${days} days`;
-    if (days < 365) return `${Math.floor(days / 30)} months`;
-    return `${Math.floor(days / 365)} years`;
+    if (!days) return "Unknown";
+
+    const years = Math.floor(days / 365);
+    const months = Math.floor((days % 365) / 30);
+
+    if (years > 0) {
+      return `${years} years ${months} months`;
+    }
+
+    return `${days} days`;
   };
 
   const handlePredict = async () => {
@@ -52,6 +59,7 @@ function Dashboard() {
       setFeatures(response.data.features || []);
       setLoading(false);
       setDomainInfo(response.data.dynamic_signals || null);
+      setIpInfo(response.data.ip_info || {});
 
     } catch (error) {
       alert("Error connecting to backend.");
@@ -221,9 +229,23 @@ function Dashboard() {
 
                 <div className="soc-card">
                   <h3>Scan Metadata</h3>
+
                   <p><strong>URL:</strong> {url}</p>
-                  <p><strong>Protocol:</strong> {url.startsWith("https") ? "HTTPS" : "HTTP"}</p>
+
+                  <p><strong>Protocol:</strong>
+                  {url.startsWith("https") ? " HTTPS" : " HTTP"}
+                  </p>
+
+                  <p><strong>Server IP:</strong> {ipInfo.ip || "Unknown"}</p>
+
+                  <p><strong>Location:</strong> {ipInfo.country || "Unknown"}</p>
+
+                  <p><strong>ISP:</strong> {ipInfo.isp || "Unknown"}</p>
+
+                  <p><strong>ASN:</strong> {ipInfo.asn || "Unknown"}</p>
+
                   <p><strong>Risk Score:</strong> {percentage.toFixed(2)}%</p>
+
                   <p><strong>Threat Level:</strong> {threatLevel}</p>
                 </div>
 
@@ -236,30 +258,35 @@ function Dashboard() {
                   <>
                     <p>
                       <strong>Domain Age:</strong>{" "}
-                      {formatAge(domainInfo.domain_age_days)}
+                      {domainInfo.domain_age_days
+                        ? formatAge(domainInfo.domain_age_days)
+                        : "Unknown"}
                     </p>
 
                     <p>
-                      <strong>HTTPS:</strong>{" "}
-                      {domainInfo.has_https === 1 ? "Secure (HTTPS)" : "Not Secure (HTTP)"}
+                      <strong>Registrar:</strong>{" "}
+                      {domainInfo.registrar || "Unknown"}
                     </p>
 
                     <p>
-                      <strong>DNS Status:</strong>{" "}
-                      {domainInfo.dns_resolves === 1
-                        ? "Domain Resolves"
-                        : "DNS Resolution Failed"}
+                      <strong>SSL Certificate Age:</strong>{" "}
+                      {domainInfo.ssl_age_days
+                        ? formatAge(domainInfo.ssl_age_days)
+                        : "Unknown"}
                     </p>
 
-                    {domainInfo.risk_flags.length > 0 && (
-                      <>
-                        <h4 style={{ marginTop: "10px" }}>Risk Flags:</h4>
-                        <ul>
-                          {domainInfo.risk_flags.map((flag, index) => (
-                            <li key={index}>⚠ {flag}</li>
-                          ))}
-                        </ul>
-                      </>
+                    <p>
+                      <strong>Name Servers:</strong>
+                    </p>
+
+                    {domainInfo.name_servers && domainInfo.name_servers.length > 0 ? (
+                      <ul>
+                        {domainInfo.name_servers.map((ns, index) => (
+                          <li key={index}>{ns.replace(".", "")}</li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p>Unknown</p>
                     )}
                   </>
                 )}
