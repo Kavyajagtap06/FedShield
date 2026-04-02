@@ -1,0 +1,36 @@
+============================================================
+  FEDSHIELD - MODEL TRAINING REPORT
+  Generated: 2026-04-01 20:57:20
+============================================================
+
+DATASET
+  Phishing URLs  : 1760
+  Legitimate URLs: 3000
+  Total          : 4760
+  Features used  : 10 (basic UCI-style only)
+
+TEST SET PERFORMANCE (pure ML baseline for paper)
+  Accuracy  : 0.8109  (81.1%)
+  Precision : 0.8142
+  Recall    : 0.5960
+  F1 Score  : 0.6882
+  ROC-AUC   : 0.7655
+
+NOTE: Pure ML uses only 10 basic URL structure features.
+FedShield hybrid adds brand detection, domain intelligence,
+and threat intelligence feeds, pushing detection to 90%+.
+This gap is the core finding of the research paper.
+
+CLASSIFICATION REPORT
+              precision    recall  f1-score   support
+
+  Legitimate       0.81      0.93      0.86       464
+    Phishing       0.81      0.60      0.69       250
+
+    accuracy                           0.81       714
+   macro avg       0.81      0.76      0.78       714
+weighted avg       0.81      0.81      0.80       714
+
+Model  -> ..\models\phishing_model_modern.h5
+Scaler -> ..\models\scaler_modern.pkl
+============================================================
