@@ -10,7 +10,7 @@ function LandingPage() {
       <div className="landing-content">
         <h1 className="landing-title">FedShield</h1>
         <p className="landing-subtitle">
-          AI-Powered Phishing Detection Platform
+          Phishing Detection Platform
         </p>
 
         <button
